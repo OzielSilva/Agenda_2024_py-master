@@ -1,0 +1,86 @@
+{% extends 'contato/base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Telefônica Estilizada</title>
+    <!-- Link para o CSS do Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link para ícones do Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container my-4">
+        <!-- Menu -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded-3 shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Agenda Telefônica</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="#">Adicionar Contato</a>
+                        <a class="nav-link" href="#">Perfil</a>
+                        <a class="nav-link" href="#">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="mt-3"></div>
+
+        <!-- Campo de pesquisa -->
+        <div class="d-flex justify-content-end">
+            <div class="input-group w-50">
+                <input class="form-control" id="searchInput" type="text" placeholder="Pesquisar contato...">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mt-3"></div>
+
+        <div class="container">
+            <ul class="list-group">
+
+                <!-- Primeiro contato estático -->
+                {% if contatos %}
+                {% for contato in contatos %}
+                <li class="list-group-item d-flex align-items-center mb-2">
+                    {%if info.imagem == '' or info.imagem == null %}
+                    <img src="data:image/jpeg;base64,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"
+                        class="rounded-circle me-3 imgContato" alt="Foto de Maria Silva">
+                    {%else%}
+                    <img src="{{info.imagem.url}}" class="rounded-circle me-3 imgContato" alt="Foto de Maria Silva">
+                    {%endif%}
+                    <img src="https://static1.purepeople.com.br/articles/0/11/34/0/@/89352-denise-e-dora-em-o-auto-da-580x0-1.jpg"
+                        class="rounded-circle me-3 imgContato" alt="Foto de Maria Silva">
+                    <div class="flex-grow-1">
+                        <a href="{% url 'contato' contato.id %}" class="text-decoration-none">{{ contato.nome }}</a>
+                    </div>
+                    <span>
+                        <i class="bi bi-pencil-square text-primary" style="cursor:pointer;"></i>
+                        <i class="bi bi-trash-fill text-danger ms-2" style="cursor:pointer;"></i>
+                    </span>
+                </li>
+                {% endfor %}
+                {% else %}
+                <p>Nenhum contato encontrado.</p>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- Inclui o footer -->
+        {% include 'contato/partials/_footer.html' %}
+
+        <!-- Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        {% endblock %}
